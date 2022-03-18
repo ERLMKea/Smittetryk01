@@ -45,6 +45,12 @@ public class CountyRESTController {
         }
     }
 
+    @GetMapping("countyByNameLike/{name}")
+    public List<County> findCountyByNameLike(@PathVariable String name) {
+        name = '%' + name + '%';
+        return countyRepository.findByNameIsLike(name);
+    }
+
     @GetMapping("/")
     public String hej() {
         return "Hello World";
