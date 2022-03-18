@@ -1,7 +1,9 @@
 package com.example.smittetryk01.controller;
 
 import com.example.smittetryk01.model.County;
+import com.example.smittetryk01.model.Region;
 import com.example.smittetryk01.repository.CountyRepository;
+import com.example.smittetryk01.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ public class CountyRESTController {
 
     @Autowired
     CountyRepository countyRepository;
+
+    @Autowired
+    RegionRepository regionRepository;
 
     @GetMapping("/counties")
     public List<County> getAllCounties() {
@@ -50,6 +55,23 @@ public class CountyRESTController {
         name = '%' + name + '%';
         return countyRepository.findByNameIsLike(name);
     }
+
+    @GetMapping("countyByRegionId/{id}")
+    public List<County> findCountyByRegionId(@PathVariable String id) {
+        return countyRepository.findCountyByRegionRegionCode(id);
+    }
+
+    @GetMapping("countyByRegionId2/{id}")
+    public List<County> findCountyByRegionId2(@PathVariable String id) {
+        Optional<Region> region = regionRepository.findById(id);
+        if (region.isPresent()) {
+            Region reg = region.get();
+            return countyRepository.findCountyByRegion(reg);
+        } else {
+            return null;
+        }
+    }
+
 
     @GetMapping("/")
     public String hej() {
