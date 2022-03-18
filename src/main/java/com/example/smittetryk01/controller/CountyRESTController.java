@@ -72,6 +72,18 @@ public class CountyRESTController {
         }
     }
 
+    @GetMapping("countCountyByNameLike/{name}")
+    public long countCountyByNameLike(@PathVariable String name) {
+        name = '%' + name + '%';
+        return countyRepository.countCountyByNameLike(name);
+    }
+
+    @GetMapping("countCountyByNameLike/{name}/{regcode}")
+    public long countCountyByNameLikeAndRegionCode(@PathVariable String name, @PathVariable String regcode) {
+        name = '%' + name + '%';
+        return countyRepository.countCountyByNameLikeAndRegionCode(name, regcode);
+    }
+
 
     @GetMapping("/")
     public String hej() {
