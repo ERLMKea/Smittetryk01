@@ -21,9 +21,29 @@ public class CountyRESTController {
     @GetMapping("/counties")
     public List<County> getAllCounties() {
         return countyRepository.findAll();
-
     }
 
+    @GetMapping("countyByName/{name}")
+    public County findCountyByName(@PathVariable String name) {
+        Optional<County> obj = countyRepository.findByName(name);
+        if (obj.isPresent()) {
+            return obj.get();
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("countyByNameRE/{name}")
+    public ResponseEntity<County> findCountyByNameRE(@PathVariable String name) {
+        Optional<County> optCounty = countyRepository.findByName(name);
+        if (optCounty.isPresent()) {
+            return new ResponseEntity<County>(optCounty.get(),HttpStatus.OK);
+        } else {
+            County notfoundCounty = new County();
+            notfoundCounty.setName("Jeg kunne ikke finde name=" + name);
+            return new ResponseEntity<County>(notfoundCounty, HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping("/")
     public String hej() {

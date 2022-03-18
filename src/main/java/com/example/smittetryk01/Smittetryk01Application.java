@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Smittetryk01Application {
 
     public static void main(String[] args) {
+
+        //create jdbc connection to database in azure.
+
         SpringApplication.run(Smittetryk01Application.class, args);
     }
 
