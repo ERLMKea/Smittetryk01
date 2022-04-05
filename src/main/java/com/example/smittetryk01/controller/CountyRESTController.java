@@ -28,6 +28,11 @@ public class CountyRESTController {
         return countyRepository.findAll();
     }
 
+    @GetMapping("/counties2")
+    public List<County> getAllCounties2() {
+        return countyRepository.findAll();
+    }
+
     @GetMapping("countyByName/{name}")
     public County findCountyByName(@PathVariable String name) {
         Optional<County> obj = countyRepository.findByName(name);
@@ -42,11 +47,11 @@ public class CountyRESTController {
     public ResponseEntity<County> findCountyByNameRE(@PathVariable String name) {
         Optional<County> optCounty = countyRepository.findByName(name);
         if (optCounty.isPresent()) {
-            return new ResponseEntity<County>(optCounty.get(),HttpStatus.OK);
+            return new ResponseEntity<>(optCounty.get(),HttpStatus.OK);
         } else {
             County notfoundCounty = new County();
             notfoundCounty.setName("Jeg kunne ikke finde name=" + name);
-            return new ResponseEntity<County>(notfoundCounty, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(notfoundCounty, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -114,11 +119,11 @@ public class CountyRESTController {
         Optional<County> optCounty = countyRepository.findById(id);
         if (optCounty.isPresent()) {
             countyRepository.save(county);
-            return new ResponseEntity<County>(county,HttpStatus.OK);
+            return new ResponseEntity<>(county,HttpStatus.OK);
         } else {
             County notfoundCounty = new County();
             notfoundCounty.setName("Jeg kunne ikke finde id=" + id);
-            return new ResponseEntity<County>(notfoundCounty, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(notfoundCounty, HttpStatus.NOT_FOUND);
         }
     }
 
