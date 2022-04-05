@@ -1,5 +1,8 @@
 package com.example.smittetryk01.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -15,6 +18,7 @@ public class County {
 
     @ManyToOne
     @JoinColumn(name = "regioncode")
+    @JsonBackReference
     private Region region;
 
     public String getCountyCode() {

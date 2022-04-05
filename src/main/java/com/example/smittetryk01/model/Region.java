@@ -1,6 +1,8 @@
 package com.example.smittetryk01.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,7 +19,6 @@ public class Region {
 
     @OneToMany
     @JoinColumn(name="regioncode")
-    @JsonBackReference
     private Set<County> counties = new HashSet<>();
 
     public String getRegionCode() {
