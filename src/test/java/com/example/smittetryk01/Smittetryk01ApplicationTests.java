@@ -7,18 +7,14 @@ import com.example.smittetryk01.repository.RegionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junitpioneer.jupiter.SetEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class Smittetryk01ApplicationTests {
 
     @Autowired
@@ -35,18 +31,24 @@ class Smittetryk01ApplicationTests {
         region.setHref("https://api.dataforsyningen.dk/regioner/1085");
         regionRepository.save(region);
 
-        County county = new County();
-        county.setName("Roskilde");
-        county.setCountyCode("0265");
-        county.setHref("http://localhost:8080/county/0265");
-        county.setRegion(region);
-        countyRepository.save(county);
+        County roskilde = new County();
+        roskilde.setName("Roskilde");
+        roskilde.setCountyCode("0265");
+        roskilde.setHref("http://localhost:8080/county/0265");
+        roskilde.setRegion(region);
+        countyRepository.save(roskilde);
+
+        County kobenhavn = new County();
+        kobenhavn.setName("København NV");
+        kobenhavn.setCountyCode("2400");
+        kobenhavn.setHref("http://localhost:8080/county/2400");
+        kobenhavn.setRegion(region);
+        countyRepository.save(kobenhavn);
     }
 
     @Test
     void testFunc() {
         List<County> counties = countyRepository.findAll();
-        Assertions.assertEquals(true, counties.size()>0);
+        Assertions.assertEquals(2, counties.size());
     }
-
 }
