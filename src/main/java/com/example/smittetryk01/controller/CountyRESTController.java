@@ -1,5 +1,6 @@
 package com.example.smittetryk01.controller;
 
+import com.example.smittetryk01.exception.ResourceNotFoundException;
 import com.example.smittetryk01.model.County;
 import com.example.smittetryk01.model.Region;
 import com.example.smittetryk01.repository.CountyRepository;
@@ -33,8 +34,8 @@ public class CountyRESTController {
         return countyRepository.findAll();
     }
 
-    @GetMapping("countyByName/{name}")
-    public County findCountyByName(@PathVariable String name) {
+    @GetMapping("countyByNameyy/{name}")
+    public County findCountyByNameyy(@PathVariable String name) {
         Optional<County> obj = countyRepository.findByName(name);
         if (obj.isPresent()) {
             return obj.get();
@@ -43,6 +44,20 @@ public class CountyRESTController {
         }
     }
 
+    @GetMapping("countyByName/{name}")
+    public County findCountyByName(@PathVariable String name) {
+        return countyRepository.findByName(name).orElseThrow(() -> new ResourceNotFoundException("County not found with name = " + name));
+    }
+
+
+
+    @GetMapping("countyxx")
+    public List<County> findAllCountiesxx() {
+        int i1 = 100;
+        int i2 = 0;
+        int i3 = i1/i2;
+        return countyRepository.findAll();
+    }
 
 
 
