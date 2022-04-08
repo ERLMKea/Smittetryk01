@@ -50,7 +50,6 @@ public class CountyRESTController {
     }
 
 
-
     @GetMapping("countyxx")
     public List<County> findAllCountiesxx() {
         int i1 = 100;
