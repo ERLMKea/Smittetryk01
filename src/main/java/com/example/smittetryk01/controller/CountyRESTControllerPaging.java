@@ -56,6 +56,39 @@ public class CountyRESTControllerPaging {
 
     }
 
+    @GetMapping("countypagesort")
+    public ResponseEntity<Map<String, Object>> getCountyPageAndSort(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id,desc") String[] sort) {
+
+        List<Sort.Order> orders = new ArrayList<>();
+        if (sort[0].contains(",")) {
+            for (String sortOrder: sort) {
+                String[] _sort = sortOrder.split(",");
+                orders.add(new Sort.Order(getSortDirection(_sort[1]), _sort[0]));
+            }
+        } else {
+            orders.add(new Sort.Order(getSortDirection(sort[1]), sort[0]));
+        }
+
+        Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
+        Page<County> pageCounty = countyRepository.findAll(pagingSort);
+        List<County> county = pageCounty.getContent();
+
+        if (county.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("county", county);
+        response.put("currentPage", pageCounty.getNumber());
+        response.put("totalItems", pageCounty.getTotalElements());
+        response.put("totalPages", pageCounty.getTotalPages());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+
 
     @GetMapping("countypagexx")
     public ResponseEntity<List<County>> getPageOfCountiesxx() {
@@ -72,8 +105,9 @@ public class CountyRESTControllerPaging {
     }
 
     @GetMapping("countypagedefault")
-    public ResponseEntity<Map<String, Object>> getPageOfCountiesDefault(@RequestParam(defaultValue = "0") int page,
-                                                                     @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Map<String, Object>> getPageOfCountiesDefault(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Pageable countyPage = PageRequest.of(page, size);
         Page<County> pageCounty = countyRepository.findAll(countyPage);
         List<County> lstCounty = pageCounty.getContent();
