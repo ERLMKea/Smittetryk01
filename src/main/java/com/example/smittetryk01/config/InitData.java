@@ -33,7 +33,7 @@ public class InitData implements CommandLineRunner {
         county.setRegion(region);
         countyRepository.save(county);
 
-        county.setName("Køgexx");
+        county.setName("Køgex");
         county.setCountyCode("0259");
         county.setHref("http://localhost:8080/county/0259");
         county.setRegion(region);
